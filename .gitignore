@@ -1,0 +1,19 @@
+# Build artifacts
+/build/
+/*.o
+/**/*.o
+
+# Executable
+build/simulator
+
+# macOS system files
+.DS_Store
+
+# Linux system files
+*~
+
+# Visual Studio Code
+.vscode/
+
+# Logs
+*.log
