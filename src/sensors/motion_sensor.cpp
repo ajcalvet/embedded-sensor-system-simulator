@@ -10,8 +10,14 @@ std::string MotionSensor::readData() {
     }
     // Detect motion 20% of the time on average
     if (rand() % 5 == 0) {
+        motion = 1;
         cooldown = 3;
         return "Motion detected";
     }
+    motion = 0;
     return "No motion detected";
+}
+
+int MotionSensor::getNumerical() {
+    return motion;
 }

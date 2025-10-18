@@ -9,3 +9,7 @@ std::string TemperatureSensor::readData() {
     if (temp > 32) temp = 32;
     return "Temperature " + std::to_string(temp) + " °C";
 }
+
+int TemperatureSensor::getNumerical() {
+    return temp;
+}

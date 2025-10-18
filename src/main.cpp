@@ -3,6 +3,7 @@
 #include "motion_sensor.h"
 #include "temperature_sensor.h"
 #include "fusion_module.h"
+#include "data_logger.h"
 #include <vector>
 #include <iostream>
 #include <chrono>
@@ -11,6 +12,9 @@
 static TemperatureSensor temp_sensor;
 static MotionSensor motion_sensor;
 static std::vector<Sensor*> sensors = {&temp_sensor, &motion_sensor};
+
+// Logger
+DataLogger logger("logs/data.csv", true);  // true = overwrite CSV on start
 
 // Start time for timestamps
 // auto program_start = std::chrono::steady_clock::now();
@@ -36,6 +40,9 @@ void run_fusion_module() {
     for (const auto& reading : readings) {
         std::cout << "\t\t\t\t- " << reading << "\n";
     }
+    // Log readings to CVS file
+    auto readings_numerical = getSensorDataNumerical(sensors);
+    logger.logToCSV(readings_numerical);
 }
 
 int main() {

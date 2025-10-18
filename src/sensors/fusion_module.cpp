@@ -14,3 +14,15 @@ std::vector<std::string> fuseSensorData(const std::vector<Sensor*>& sensors) {
 
     return readings;
 }
+
+// Takes a vector of sensors and outputs a vector of their last numerical readings
+std::vector<int> getSensorDataNumerical(const std::vector<Sensor*>& sensors) {
+    std::vector<int> readings_numerical;
+    readings_numerical.reserve(sensors.size());
+
+    for (auto* sensor : sensors) {
+        readings_numerical.push_back(sensor->getNumerical());
+    }
+
+    return readings_numerical;
+}
