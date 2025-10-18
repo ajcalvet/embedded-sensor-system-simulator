@@ -3,7 +3,9 @@
 #include <cstdlib>
 
 std::string TemperatureSensor::readData() {
-    // Randomly generature a temperature reading from 20-29 degrees Celsius
-    int temp = 20 + rand() % 10;
+    // Drift temperature by +/- 1 C
+    temp += (rand() % 3) - 1;
+    if (temp < 18) temp = 18;
+    if (temp > 32) temp = 32;
     return "Temperature " + std::to_string(temp) + " °C";
 }
