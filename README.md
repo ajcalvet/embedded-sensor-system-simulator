@@ -10,7 +10,22 @@ A hybrid C/C++ project that simulates an embedded system managing multiple senso
 
 ## Build and Run
 
+Build:
 ```
 make
+```
+
+Run the program:
+```
+./build/simulator > ./logs/system_log.txt
+```
+
+Or if logging to the console:
+```
 ./build/simulator
+```
+
+Erase the build with:
+```
+make clean
 ```
