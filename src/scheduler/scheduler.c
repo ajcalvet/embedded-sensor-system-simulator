@@ -8,6 +8,7 @@
 
 static Task* tasks[MAX_TASKS];      // Array of currently scheduled tasks
 static int task_count = 0;          // Number of currently scheduled tasks
+unsigned long start_time;
 
 // Get the current time in milliseconds
 static unsigned long current_time_ms() {
@@ -18,11 +19,12 @@ static unsigned long current_time_ms() {
 
 // Initilize the scheduler
 void scheduler_init() {
+    start_time = current_time_ms();
     task_count = 0;
     for (int i = 0; i < MAX_TASKS; i++) {
         tasks[i] = NULL;
     }
-    printf("[Scheduler] Initialized sucessfully.\n");
+    printf("[%09lu ms]\t[Scheduler]\tInitialized sucessfully.\n", current_time_ms() - start_time);
 }
 
 // Add a task to the scheduler
@@ -30,17 +32,16 @@ void scheduler_add_task(Task* task) {
     if (task_count < MAX_TASKS) {
         tasks[task_count] = task;
         task_count += 1;
-        printf("[Scheduler] Task added: %s | Total: %d\n", task->name, task_count);
+        printf("[%09lu ms]\t[Scheduler]\tTask added: %s\n\t\t\t\tTotal: %d\n", current_time_ms() - start_time, task->name, task_count);
     } else {
-        printf("[Scheduler] Scheduler full. Cannot add more tasks.");
+        printf("[%09lu ms]\t[Scheduler]\tScheduler full. Cannot add more tasks.", current_time_ms() - start_time);
     }
 }
 
 // Run the scheduler
 void scheduler_run() {
-    printf("[Scheduler] Running simulation loop...\n");
-
-    unsigned long start_time = current_time_ms();
+    printf("[%09lu ms]\t[Scheduler]\tRunning simulation loop...\n", current_time_ms() - start_time);
+    printf("---------------------------------------------------------------------\n");
 
     while (1) {
         unsigned long now = current_time_ms();

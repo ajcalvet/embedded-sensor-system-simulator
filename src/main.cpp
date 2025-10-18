@@ -39,10 +39,7 @@ void run_fusion_module() {
 }
 
 int main() {
-    std::cout << "Starting simulator...\n";
-    
     scheduler_init();
-    std::cout << "Scheduler initialized...\n";
 
     Task temp_task   = {read_temperature_sensor, 1000, 0, "Temperature Reading"}; // Report temp every 1 s
     Task motion_task = {read_motion_sensor,       500, 0, "Motion Detection"};    // Report motion every 500 ms
@@ -52,7 +49,7 @@ int main() {
     scheduler_add_task(&motion_task);
     scheduler_add_task(&fusion_task);
 
-    std::cout << "Running the scheduler...\n";
-    scheduler_run();                               // Loop forever
+    // Loop forever
+    scheduler_run();
     return 0;
 }
