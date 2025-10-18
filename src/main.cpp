@@ -16,6 +16,9 @@ static std::vector<Sensor*> sensors = {&temp_sensor, &motion_sensor};
 // Logger
 DataLogger logger("logs/data.csv", true);  // true = overwrite CSV on start
 
+// Heartbeat Counter
+int counter = 0;
+
 // Start time for timestamps
 // auto program_start = std::chrono::steady_clock::now();
 //void logTaskExecution(const std::string& taskName) {
@@ -45,16 +48,27 @@ void run_fusion_module() {
     logger.logToCSV(readings_numerical);
 }
 
+void heartbeat() {
+    // ANSI escape codes for dim gray text
+    const std::string DIM = "\033[2m";   // Dim (faint)
+    const std::string RESET = "\033[0m"; // Reset text style
+
+    std::cout << DIM << "\t\t[Heartbeat]\tSystem is running... (" << counter << ")" << RESET << "\n";
+    counter += 1;
+}
+
 int main() {
     scheduler_init();
 
-    Task temp_task   = {read_temperature_sensor, 1000, 0, "Temperature Reading"}; // Report temp every 1 s
-    Task motion_task = {read_motion_sensor,       500, 0, "Motion Detection"};    // Report motion every 500 ms
-    Task fusion_task = {run_fusion_module,       2000, 0, "Fusion Module"};       // Combine temp + motion every 2 s
+    Task temp_task      = {read_temperature_sensor, 1000, 0, "Temperature Reading"}; // Report temp every 1 s
+    Task motion_task    = {read_motion_sensor,       500, 0, "Motion Detection"};    // Report motion every 500 ms
+    Task fusion_task    = {run_fusion_module,       2000, 0, "Fusion Module"};       // Combine temp + motion every 2 s
+    Task heartbeat_task = {heartbeat,               5000, 0, "Heartbeat Pulse"};     // Heartbeat every 5 s
     
     scheduler_add_task(&temp_task);
     scheduler_add_task(&motion_task);
     scheduler_add_task(&fusion_task);
+    scheduler_add_task(&heartbeat_task);
 
     // Loop forever
     scheduler_run();
