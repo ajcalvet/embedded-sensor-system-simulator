@@ -1,12 +1,9 @@
-#include "sensor_base.h"
+#include "motion_sensor.h"
 #include <string>
 #include <cstdlib>
 
-class MotionSensor : public Sensor {
-public:
-    std::string readData() override {
-        // Detect motion half the time on average
-        bool motion = rand() % 2;
-        return motion ? "Motion detected" : "No motion detected";
-    }
-};
+std::string MotionSensor::readData() {
+    // Detect motion half the time on average
+    bool motion = rand() % 2;
+    return motion ? "Motion detected" : "No motion detected";
+}

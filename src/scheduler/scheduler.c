@@ -22,7 +22,7 @@ void scheduler_init() {
     for (int i = 0; i < MAX_TASKS; i++) {
         tasks[i] = NULL;
     }
-    printf("[Scheduler] Initialized.\n");
+    printf("[Scheduler] Initialized sucessfully.\n");
 }
 
 // Add a task to the scheduler
@@ -30,7 +30,7 @@ void scheduler_add_task(Task* task) {
     if (task_count < MAX_TASKS) {
         tasks[task_count] = task;
         task_count += 1;
-        printf("[Scheduler] Task added. Total: %d\n", task_count);
+        printf("[Scheduler] Task added: %s | Total: %d\n", task->name, task_count);
     } else {
         printf("[Scheduler] Scheduler full. Cannot add more tasks.");
     }
@@ -51,7 +51,7 @@ void scheduler_run() {
                 if (now - tasks[i]->last_run >= tasks[i]->interval_ms) {
                     // Print timestamped log
                     unsigned long since_start = now - start_time;
-                    printf("[%06lu ms] [Scheduler] Running task #%d (%s)\n", since_start, i, tasks[i]->name);
+                    printf("[%09lu ms]\t[Scheduler]\tRunning task #%d (%s)\n", since_start, i, tasks[i]->name);
                     // Run the task
                     tasks[i]->function();
                     tasks[i]->last_run = now;
@@ -61,6 +61,6 @@ void scheduler_run() {
         }
         // Sleep for SYSTEM_TICK_MS milliseconds to reduce CPU usage
         usleep(SYSTEM_TICK_MS * 1000);
-        if (task_ran) printf("-------------------------------------------------\n");
+        if (task_ran) printf("---------------------------------------------------------------------\n");
     }
 }

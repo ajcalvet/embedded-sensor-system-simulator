@@ -1,10 +1,16 @@
-#include "sensor_base.h"
+#include "fusion_module.h"
 #include <iostream>
 #include <vector>
+#include <string>
 
-void fuseSensorData(const std::vector<Sensor*>& sensors) {
-    std::cout << "[Fusion] Fusing sensor data...\n";
+// Takes a vector of sensors and outputs a vector of their readings
+std::vector<std::string> fuseSensorData(const std::vector<Sensor*>& sensors) {
+    std::vector<std::string> readings;
+    readings.reserve(sensors.size());
+
     for (auto* sensor : sensors) {
-        std::cout << "  - " << sensor->readData() << "\n";
+        readings.push_back(sensor->readData());
     }
+
+    return readings;
 }
